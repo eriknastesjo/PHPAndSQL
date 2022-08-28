@@ -1,0 +1,46 @@
+<article class="article-big">
+
+<h2>Kodstruktur och dokumentation</h2>
+
+<h4>Kodstruktur</h4>
+<p>
+    Följande text är en beskrivning av bakomliggande kodstruktur för denna webbplats. Vi börjar med css-koden. Varje html-dokument hämtar stil från style.css. Denna fil importerar i sin tur kod från andra css-filer (t.ex. en för bilder och en för media-queries) för att det ska bli mer lättöverskådligt. I css-koderna finns referenser till både element och klasser.
+</p>
+
+<p>
+    Lite mer invecklad struktur ligger till grund för html- och php-koden. Den är uppdelad i sidokontroller, "template"-vy och mindre vyer. Sidokontrollerna är det som i huvudsak styr vad webbsidan ska innehålla. För varje sida på webbplatsen så finns det en sidokontroll som talar om för "template"-vyn vad om ska finnas med. Det enda som sidokontrollerna inte styr över är de element som finns på varje webbsida och som därför kan kodas direkt i "template"-vyn, t.ex. navbaren och footern.
+</p>
+
+<p>
+    I projektet använder jag två olika "template-vyer". I den ena delas innehållet upp i en "main" och i en sidebar. Denna struktur används på nästan alla sidor. Ett undantag är när använderen väljer att få upp enstaka bilder eller artiklar i "stor vy". På den sidan finns ingen sidebar. Sidokontrollerna tar ibland hjälp av mindre vyer för att återigen kunna få det mer lättöverskådligt. Vyerna har alltså hand om att utföra "deloperationer" åt sidokontrollerna. I detta projekt är deras huvudsakliga uppgift att returnera data från databasen t.ex. db-article-extract.php.
+</p>
+
+<p>
+    Det kan också vara värt att nämna att query-strängen i URL:en används för att hålla reda vilken bild eller artikel som ska visas i "stor vy". Den används också för att hålla reda på vilka bilder som ska visas i gallieriet. När användaren genomför en sökning så används POST-formulär och som skickar information till en processingsida. Processingsidan för endast in sökinformationen i querysträngen och skickar vidare till resultatsidan som genomför själva sökningen baserat på query-strängen. Processingsidan är till för att undvika problemet med "Confirm Form Resubmission".
+</p>
+
+<p>
+    Slutligen så har vi "ren" php-kod som ligger i en separat fil functions-php. Där ligger bland annat metoder för rendering som ligger till grund för att vi alls ska kunna se innehållet på webbsidan. Där finns också en funktion som sköter uppkoppling till datasen via PDO. I syfte att få med alla rader från en tabell (oavsett storlek) finns en funktion som får ut antal rader från en given tabell. Det finns också en funktion för att få fram rätt bilder i galleriet (om id anges som finns utöver antal rader i tabellen så returneras id för bilder som ligger i början av tabellen). Ytterligare ett par funktioner kan nämnas som är ansvariga för att tabllens rader får kontinuerliga id-beteckningar. Detta blir viktigt när vi väljer att ta bort en rad från en tabell.
+</p>
+
+<h4>Responsivitet</h4>
+<p>
+    Vidare till responsiviteten på webbplatsen - här används endast ett par olika metoder i css-koden. Media query används för att ändra position och bredd på "main" och sidebar vid en viss skärmbredd. Med skärmbredd lika med eller mindre än 1000 px "wrappas" "main" och sidebaren så att main hamnar under sidebaren istället för att ligga sida vid sida. Andra delar av webbsidan som navbaren och bilderna i "genväg" är av display-typen inline-block vilket gör att de hamnar jämte varandra och sen "wrappas" på liknande sätt som vid flex vid mindre skärmbredd.
+</p>
+
+<h4>Potentiella förbättringar</h4>
+<p>
+    Det finns säkerligen en del saker som går att förbättra med kodstrukturen. Ett ganska uppenbart problem just nu är att det blir många olika vyer för att få fram bilder och artiklar från databasen på olika sätt. Exempelvis db-obj-extract-big.php skapades utifrån db-obj-extract.php med tillägget att använderen kan klicka på bilden för att komma till nästa bild i databasen. Ett alternativ skulle kunna vara en eller några få dynamiska vyer med flera variabler så att det blir mindre "hårdkodat".
+</p>
+<p>
+    En annan sak som nog går att förbättra är ordningen i css-koden. För tillfället är den lite "silvertejpkonstruerad" där det ibland refereras till element och ibland till klass. Där skulle man alltså kunna städa upp lite och få till en mer logisk struktur för stilsättning. Man skulle också kunna skapa en separat fil som hanterar stilen för text.
+</p>
+<p>
+    Ur säkerhetssynpunkt skulle det också vara lämpligt med kryptering vid inloggning.
+</p>
+<p>
+    Ur användarsynpunkt så bör det nämnas att man som admininstratör inte har möjlighet att bestämma i vilken ordning bilderna och artiklarna ska hamna. Om man lägger till en bild eller artikel så hamnar det alltid sist. Förmodligen är detta något som användaren skulle vilja kunna ha kontroll över och som därför kan ses som en potentiell förbättring.
+</p>
+
+
+</article>
